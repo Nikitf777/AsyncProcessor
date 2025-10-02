@@ -39,9 +39,7 @@ static async Task ProcessMultipleDataAsync()
 	var task2 = ProcessDataAsync("File2");
 	var task3 = ProcessDataAsync("File3");
 
-	await task1;
-	await task2;
-	await task3;
+	await Task.WhenAll(task1, task2, task3);
 
 	stopwatch.Stop();
 
