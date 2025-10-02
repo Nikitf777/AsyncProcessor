@@ -1,15 +1,15 @@
 using System.Diagnostics;
 
-static void ProcessData(string dataName)
+static string ProcessData(string dataName)
 {
 	Thread.Sleep(3000);
-	Console.WriteLine($"{dataName} processing finished in 3s");
+	return $"{dataName} processing finished in 3s";
 }
 
-static async Task ProcessDataAsync(string dataName)
+static async Task<string> ProcessDataAsync(string dataName)
 {
 	await Task.Delay(3000);
-	Console.WriteLine($"Asynchronous {dataName} processing finished in 3s");
+	return $"Asynchronous {dataName} processing finished in 3s";
 }
 
 static void ProcessMultipleData()
@@ -19,9 +19,9 @@ static void ProcessMultipleData()
 	var stopwatch = new Stopwatch();
 	stopwatch.Start();
 
-	ProcessData("File1");
-	ProcessData("File2");
-	ProcessData("File3");
+	Console.WriteLine(ProcessData("File1"));
+	Console.WriteLine(ProcessData("File2"));
+	Console.WriteLine(ProcessData("File3"));
 
 	stopwatch.Stop();
 
@@ -39,7 +39,10 @@ static async Task ProcessMultipleDataAsync()
 	var task2 = ProcessDataAsync("File2");
 	var task3 = ProcessDataAsync("File3");
 
-	await Task.WhenAll(task1, task2, task3);
+	var results = await Task.WhenAll(task1, task2, task3);
+	foreach (var result in results) {
+		Console.WriteLine(result);
+	}
 
 	stopwatch.Stop();
 
